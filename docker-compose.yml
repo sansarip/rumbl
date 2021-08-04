@@ -1,0 +1,20 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  rumbl-db:
+    image: postgres:11.5-alpine
+    command: postgres -c wal_level=logical
+    restart: always
+    volumes:
+      - rumbl-db:/var/lib/postgresql/data
+    ports:
+      - "${RUMBL_DB_PORT:-5432}:5432"
+    environment:
+      - POSTGRES_DB=${RUMBL_DB_NAME:-to_elixir_and_beyond}
+      - POSTGRES_USER=${RUMBL_DB_USER:-postgres}
+      - POSTGRES_PASS=${RUMBL_DB_PASS:-postgres}
+
+volumes:
+  rumbl-db:
